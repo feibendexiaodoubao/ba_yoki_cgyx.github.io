@@ -1300,34 +1300,24 @@ function showRoleMenu(x,y,row){
 function showScoreMenu(x,y,span){
 
 
-
     closeMenu();
 
 
 
-
-    let menu=
-    document.createElement("div");
-
+    let menu=document.createElement("div");
 
 
     menu.className="menu";
 
 
-
     menu.style.left=x+"px";
-
 
 
     menu.style.top=y+"px";
 
 
-
     menu.innerHTML=
-
     "<div>🗑 删除</div>";
-
-
 
 
 
@@ -1336,20 +1326,59 @@ function showScoreMenu(x,y,span){
     menu.children[0].onclick=()=>{
 
 
+        // 获取当前角色行
+        let row = span.closest(".role");
+
+
+        // 获取该积分数值
+        let value = Number(span.innerText);
+
+
+
+        // 删除积分标识
         span.remove();
 
 
 
+        // 修改角色总分
+        if(row){
+
+
+            let newScore =
+            Number(row.dataset.score)
+            -
+            value;
+
+
+
+            row.dataset.score =
+            newScore;
+
+
+
+            row.querySelector(".total")
+            .innerText =
+            newScore;
+
+
+        }
+
+
+
+
+        // 当前歌曲数量减少
         scoreCount--;
+
+
+        if(scoreCount < 0)
+            scoreCount = 0;
 
 
 
         updateSong();
 
 
-
         menu.remove();
-
 
 
         saveData();
@@ -1364,10 +1393,7 @@ function showScoreMenu(x,y,span){
     document.body.appendChild(menu);
 
 
-
 }
-
-
 
 
 
@@ -1424,13 +1450,13 @@ function createZone(canDelete=false){
 
 
         <button class="clearBtn">
-        🧹 清空角色
+        🧹 清空
         </button>
 
 
 
         <button class="sortBtn">
-        🏆 按积分排序
+        🏆 排序
         </button>
 
 
@@ -1441,7 +1467,7 @@ function createZone(canDelete=false){
         ?
         `
         <button class="deleteZone">
-        ❌ 删除分区
+        ❌ 删除
         </button>
         `
         :
