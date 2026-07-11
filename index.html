@@ -256,13 +256,14 @@ button:hover{
 
 .total{
 
-    width:45px;
+    width:40px;
 
-    text-align:right;
+    text-align:left;
 
-    color:#ff5798;
+    color:#555;
 
     font-weight:bold;
+    display: inline-block;
 
 }
 
@@ -280,13 +281,14 @@ button:hover{
 
 .name{
 
-    width:120px;
+    width:100px;
 
     cursor:pointer;
 
     font-weight:bold;
 
     user-select:none;
+    display: inline-block;
 
 }
 
@@ -298,11 +300,11 @@ button:hover{
 
     flex:1;
 
-    height:24px;
+    height:26px;
 
     overflow:hidden;
 
-    line-height:24px;
+    line-height:26px;
 
 }
 
@@ -686,20 +688,13 @@ function createRole(box){
 
 
     row.innerHTML=`
-
-    <div class="total">
-    0
-    </div>
-
-
     <div class="searchBox">
-
-
         <div class="name">
         角色名
         </div>
-
-
+          <div class="total">
+    0
+    </div>
     </div>
 
 
@@ -1260,7 +1255,7 @@ function showRoleMenu(x,y,row){
 
 
         row.querySelector(".total")
-        .innerText=0;
+        .innerText='0';
 
 
 
