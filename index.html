@@ -1,281 +1,2185 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>积分统计</title>
+
+<title>猜歌积分</title>
+
 
 <style>
+
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
-    font-family:"Microsoft YaHei",sans-serif;
 }
+
 
 body{
-    background:linear-gradient(135deg,#FFEAF4,#EAF7FF);
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    padding:40px;
+
+    margin:0;
+
+    background:#fffefe;
+
+    color:#555;
+
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+
 }
 
-.container{
-    width:900px;
-    background:white;
+
+
+/* 当前歌曲 */
+
+#songInfo{
+
+    position:fixed;
+
+    top:15px;
+
+    left:15px;
+
+    background:#fff;
+
+    padding:8px 18px;
+
     border-radius:25px;
-    padding:30px;
-    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+    border:3px solid #ffd1e5;
+
+    color:#ff5797;
+
+    font-weight:bold;
+
+    box-shadow:0 5px 15px rgba(255,120,170,.25);
+
+    z-index:100;
+
 }
+
+
+
 
 h1{
+
     text-align:center;
-    color:#ff78aa;
-    margin-bottom:25px;
+
+    margin:20px;
+
+    color:#ff70aa;
+
+    font-size:32px;
+
+    text-shadow:2px 2px #ffd6e8;
+
 }
 
-.top{
+
+
+
+#app{
+
+    width:95%;
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+
+
+
+
+/* 内容区 */
+
+
+.zone{
+
+    background:#fff;
+
+    border-radius:25px;
+
+    border:3px solid #ffd5e8;
+
+    padding:15px;
+
+    margin-bottom:18px;
+
+    box-shadow:
+
+    0 8px 20px rgba(255,120,170,.2);
+
+}
+
+
+
+
+
+
+
+.toolbar{
+
     display:flex;
-    gap:15px;
-    margin-bottom:25px;
+
+    align-items:center;
+
+    gap:8px;
+
 }
 
-input{
-    flex:1;
-    height:45px;
-    border:none;
-    outline:none;
-    border-radius:15px;
-    background:#F7F7FB;
-    padding:0 15px;
-    font-size:16px;
+
+
+
+
+.right{
+
+    margin-left:auto;
+
 }
+
+
+
+
+
+
 
 button{
+
     border:none;
+
+    border-radius:15px;
+
+    padding:8px 14px;
+
     cursor:pointer;
-    transition:.2s;
-    font-size:15px;
+
+    background:#ffe3ef;
+
+    color:#555;
+
+    box-shadow:0 3px 0 #ffc4dc;
+
 }
+
+
 
 button:hover{
+
     transform:translateY(-2px);
+
 }
 
-.addBtn{
-    background:#7AD7FF;
-    color:white;
-    padding:0 20px;
-    border-radius:15px;
+
+
+
+.green{
+
+    background:#baf5ca;
+
+    box-shadow:0 3px 0 #7ad99a;
+
 }
 
-.settleBtn{
-    margin-top:25px;
-    width:100%;
-    height:48px;
-    background:#FF9FC5;
-    color:white;
-    border-radius:18px;
-    font-size:18px;
+
+
+.red{
+
+    background:#ffbcbc;
+
+    box-shadow:0 3px 0 #ee8888;
+
 }
 
-.person{
+
+
+
+.deleteZone{
+
+    background:#ffdada;
+
+}
+
+
+
+
+
+
+
+/* 角色行 */
+
+
+.role{
+
     display:flex;
-    align-items:flex-start;
-    background:#FFF8FC;
-    border-radius:18px;
-    padding:15px;
-    margin-bottom:15px;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px;
+
+    margin-top:8px;
+
+    background:#fff8fc;
+
+    border-radius:15px;
+
+    border:2px solid #ffe1ee;
+
+    cursor:move;
+
 }
 
-.score{
-    width:70px;
-    font-size:28px;
+
+
+/* 鼠标经过显示积分按钮 */
+
+.role .scoreButtons{
+
+    display:none;
+
+}
+
+
+.role:hover .scoreButtons{
+
+    display:flex;
+
+}
+
+
+
+
+
+
+
+.total{
+
+    width:45px;
+
+    text-align:right;
+
+    color:#ff5798;
+
     font-weight:bold;
-    text-align:center;
-    margin-right:10px;
-    color:#888;
+
 }
 
-.info{
-    flex:1;
+
+
+
+
+.searchBox{
+
+    position:relative;
+
 }
+
+
 
 .name{
-    font-size:20px;
+
+    width:120px;
+
+    cursor:pointer;
+
     font-weight:bold;
-    margin-bottom:12px;
-    color:#555;
+
+    user-select:none;
+
 }
 
-.actions{
-    display:flex;
-    gap:10px;
-    margin-bottom:10px;
+
+
+
+
+.scoreArea{
+
+    flex:1;
+
+    height:24px;
+
+    overflow:hidden;
+
+    line-height:24px;
+
 }
 
-.action-btn{
-    padding:8px 14px;
+
+
+
+.score{
+
+    margin-right:6px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+
+
+.plus{
+
+    color:#20b85a;
+
+}
+
+
+
+.minus{
+
+    color:#e94b4b;
+
+}
+
+
+
+
+
+
+
+.scoreButtons{
+
+    gap:5px;
+
+}
+
+
+
+
+
+input{
+
+    width:120px;
+
+    padding:6px;
+
+    border-radius:10px;
+
+    border:2px solid #ffc5dc;
+
+}
+
+
+
+
+
+
+/* 搜索列表 */
+
+
+.searchList{
+
+    position:absolute;
+
+    top:38px;
+
+    left:0;
+
+    width:230px;
+
+    height:250px;
+
+    overflow-y:auto;
+
+    background:white;
+
     border-radius:12px;
-    color:white;
+
+    border:2px solid #ffd2e5;
+
+    box-shadow:0 5px 15px #ddd;
+
+    z-index:999;
+
 }
 
-.plus1{
-    background:#82D173;
+
+
+.searchItem{
+
+    padding:8px;
+
+    cursor:pointer;
+
 }
 
-.minus1{
-    background:#FFA0A0;
+
+
+.searchItem:hover{
+
+    background:#ffeaf3;
+
 }
 
-.plus2{
-    background:#5DCBFF;
+
+
+
+
+
+
+/* 排序动画 */
+
+
+.sortAnimation{
+
+    animation:move .5s;
+
 }
 
-.minus2{
-    background:#FFB56B;
+
+@keyframes move{
+
+
+from{
+
+    transform:translateY(-20px);
+
+    opacity:.3;
+
 }
 
-.tags{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
+
+to{
+
+    transform:translateY(0);
+
+    opacity:1;
+
 }
 
-.tag{
-    padding:5px 10px;
-    border-radius:20px;
-    color:white;
-    font-size:14px;
 }
 
-.tag.plus{
-    background:#7BD77D;
+
+
+
+
+
+
+/* 右键菜单 */
+
+
+.menu{
+
+    position:fixed;
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:8px;
+
+    box-shadow:0 5px 20px #aaa;
+
+    z-index:9999;
+
 }
 
-.tag.minus{
-    background:#FF8C8C;
+
+
+.menu div{
+
+    padding:8px 15px;
+
+    cursor:pointer;
+
+    color:#ff5795;
+
 }
+
+
+
+.menu div:hover{
+
+    background:#ffeaf3;
+
+}
+
+
+
+
+
+
+.addArea{
+
+    text-align:center;
+
+    margin:20px;
+
+}
+
+
+
 </style>
+
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-<h1>🌸 人员积分统计 🌸</h1>
+<div id="songInfo">
 
-<div class="top">
-<input id="nameInput" placeholder="输入人员姓名">
-<button class="addBtn" onclick="addPerson()">添加人员</button>
-</div>
-
-<div id="list"></div>
-
-<button class="settleBtn" onclick="settle()">✨ 结算 ✨</button>
+🎵 当前第 <span id="songNum">1</span> 首
 
 </div>
+
+
+
+<h1>
+
+🎵 猜歌名积分 🎵
+
+</h1>
+
+
+
+<div id="app"></div>
+
+
+
+<div class="addArea">
+
+<button id="addZoneBtn">
+
+➕ 添加分区
+
+</button>
+
+</div>
+
+
+
 
 <script>
 
-function addPerson(){
 
-    const input=document.getElementById("nameInput");
-    const name=input.value.trim();
+// ===============================
+// 数据
+// ===============================
 
-    if(name===""){
-        alert("请输入姓名");
-        return;
-    }
+const playerList=[
 
-    const div=document.createElement("div");
-    div.className="person";
+"yoki酱",
+"六酱宝宝",
+"一笑",
+"郑雨甜",
+"钰钰",
+"弦酱",
+"星婉",
+"大脑壳",
+"小古子",
+"东营初九",
+"怀里猫",
+"阿南",
+"kiki",
+"咕嘟鸭"
 
-    div.innerHTML=`
-        <div class="score">0</div>
+];
 
-        <div class="info">
 
-            <div class="name">${name}</div>
 
-            <div class="actions">
+let scoreCount=0;
 
-                <button class="action-btn plus1" onclick="addTag(this,1)">+1</button>
 
-                <button class="action-btn minus1" onclick="addTag(this,-1)">-1</button>
+let currentFontSize=16;
 
-                <button class="action-btn plus2" onclick="addTag(this,2)">+2</button>
 
-                <button class="action-btn minus2" onclick="addTag(this,-2)">-2</button>
 
-            </div>
 
-            <div class="tags"></div>
 
-        </div>
-    `;
 
-    document.getElementById("list").appendChild(div);
 
-    input.value="";
-}
 
-function addTag(btn,value){
+// ===============================
+// 当前歌曲
+// ===============================
 
-    const person=btn.closest(".person");
+function updateSong(){
 
-    const tags=person.querySelector(".tags");
-
-    const span=document.createElement("span");
-
-    span.className=value>0?"tag plus":"tag minus";
-
-    span.dataset.value=value;
-
-    span.innerText=value>0?`+${value}`:`${value}`;
-
-    tags.appendChild(span);
+    document
+    .getElementById("songNum")
+    .innerText=
+    scoreCount+1;
 
 }
 
-function settle(){
 
-    const persons=document.querySelectorAll(".person");
 
-    persons.forEach(person=>{
 
-        let total=0;
 
-        person.querySelectorAll(".tag").forEach(tag=>{
 
-            total+=Number(tag.dataset.value);
 
-        });
 
-        const score=person.querySelector(".score");
+// ===============================
+// 字体调整
+// ===============================
 
-        score.innerText=total;
 
-        if(total>0){
+function changeFont(num){
 
-            score.style.color="#29B35E";
 
-        }else if(total<0){
+    currentFontSize+=num;
 
-            score.style.color="#E55353";
 
-        }else{
+    if(currentFontSize<10)
+        currentFontSize=10;
 
-            score.style.color="#999";
 
-        }
+
+
+    document
+    .querySelectorAll(
+    ".name,.total,.score"
+    )
+    .forEach(e=>{
+
+
+        e.style.fontSize=
+        currentFontSize+"px";
+
 
     });
 
+
+
+    saveData();
+
+
 }
+
+
+
+
+
+
+
+
+
+// ===============================
+// 创建角色
+// ===============================
+
+
+function createRole(box){
+
+
+
+    let row=document.createElement("div");
+
+
+
+    row.className="role";
+
+
+
+    row.draggable=true;
+
+
+
+    row.dataset.score=0;
+
+
+
+    row.innerHTML=`
+
+    <div class="total">
+    0
+    </div>
+
+
+    <div class="searchBox">
+
+
+        <div class="name">
+        角色名
+        </div>
+
+
+    </div>
+
+
+
+    <div class="scoreArea"></div>
+
+
+
+    <div class="scoreButtons">
+
+
+        <button class="green">
+        +1
+        </button>
+
+
+        <button class="red">
+        -1
+        </button>
+
+
+        <button class="green">
+        +2
+        </button>
+
+
+        <button class="red">
+        -2
+        </button>
+
+
+    </div>
+
+
+    `;
+
+
+
+
+
+
+
+    let name=
+    row.querySelector(".name");
+
+
+    bindName(name,row);
+
+
+
+
+
+
+    row
+    .querySelectorAll(".scoreButtons button")
+    .forEach(btn=>{
+
+
+        btn.onclick=()=>{
+
+
+            addScore(
+
+                row,
+
+                Number(btn.innerText)
+
+            );
+
+
+        };
+
+
+    });
+
+
+
+
+
+
+    // 新角色继承字体
+
+
+    row.querySelector(".name")
+    .style.fontSize=
+    currentFontSize+"px";
+
+
+
+    row.querySelector(".total")
+    .style.fontSize=
+    currentFontSize+"px";
+
+
+
+
+
+    box.appendChild(row);
+
+
+
+    enableDrag(row);
+
+
+
+    return row;
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// 名字编辑
+// ===============================
+
+
+function bindName(el,row){
+
+
+
+    el.onclick=function(){
+
+
+
+        let input=document.createElement("input");
+
+
+
+        input.value=
+        el.innerText==="角色名"
+        ?
+        ""
+        :
+        el.innerText;
+
+
+
+        el.replaceWith(input);
+
+
+
+
+
+        let list=document.createElement("div");
+
+
+
+        list.className="searchList";
+
+
+
+        input.parentNode
+        .appendChild(list);
+
+
+
+
+
+
+        function refresh(){
+
+
+            list.innerHTML="";
+
+
+
+            playerList
+            .filter(n=>
+
+            n.includes(input.value)
+
+            )
+            .forEach(n=>{
+
+
+
+                let item=
+                document.createElement("div");
+
+
+
+                item.className="searchItem";
+
+
+
+                item.innerText=n;
+
+
+
+
+                item.onclick=()=>{
+
+
+                    input.value=n;
+
+
+                    finish();
+
+
+                };
+
+
+
+                list.appendChild(item);
+
+
+
+            });
+
+
+
+        }
+
+
+
+
+
+
+        refresh();
+
+
+
+        input.oninput=refresh;
+
+
+
+        input.onblur=()=>{
+
+
+            setTimeout(
+                finish,
+                100
+            );
+
+
+        };
+
+
+
+
+
+
+        function finish(){
+
+
+
+            let div=
+            document.createElement("div");
+
+
+
+            div.className="name";
+
+
+
+            div.innerText=
+            input.value||
+            "角色名";
+
+
+
+            div.style.fontSize=
+            currentFontSize+"px";
+
+
+
+            bindName(div,row);
+
+
+
+            input.replaceWith(div);
+
+
+
+            list.remove();
+
+
+
+            saveData();
+
+
+        }
+
+
+
+
+        input.focus();
+
+
+
+    };
+
+
+
+
+
+
+    // 角色右键
+
+
+    el.oncontextmenu=function(e){
+
+
+        e.preventDefault();
+
+
+
+        showRoleMenu(
+
+            e.pageX,
+
+            e.pageY,
+
+            row
+
+        );
+
+
+    };
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// 添加积分
+// ===============================
+
+
+function addScore(row,num){
+
+
+
+    row.dataset.score=
+    Number(row.dataset.score)+num;
+
+
+
+    row.querySelector(".total")
+    .innerText=
+    row.dataset.score;
+
+
+
+
+
+    let span=
+    document.createElement("span");
+
+
+
+    span.className=
+    "score "+
+    (
+        num>0
+        ?
+        "plus"
+        :
+        "minus"
+    );
+
+
+
+    span.innerText=
+    num>0
+    ?
+    "+"+num
+    :
+    num;
+
+
+
+
+    span.style.fontSize=
+    currentFontSize+"px";
+
+
+
+
+
+
+
+    span.oncontextmenu=function(e){
+
+
+
+        e.preventDefault();
+
+
+
+        showScoreMenu(
+
+            e.pageX,
+
+            e.pageY,
+
+            span
+
+        );
+
+
+
+    };
+
+
+
+
+
+    row
+    .querySelector(".scoreArea")
+    .appendChild(span);
+
+
+
+
+
+    scoreCount++;
+
+
+
+    updateSong();
+
+
+
+    saveData();
+
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// 角色右键
+// ===============================
+
+
+function showRoleMenu(x,y,row){
+
+
+
+    closeMenu();
+
+
+
+
+    let menu=
+    document.createElement("div");
+
+
+
+    menu.className="menu";
+
+
+
+    menu.style.left=x+"px";
+
+
+
+    menu.style.top=y+"px";
+
+
+
+    menu.innerHTML=`
+
+    <div>删除角色</div>
+
+    <div>分数重置</div>
+
+    `;
+
+
+
+
+
+
+
+    menu.children[0].onclick=()=>{
+
+
+
+        let num=
+        row.querySelectorAll(".score")
+        .length;
+
+
+
+        scoreCount-=num;
+
+
+
+        row.remove();
+
+
+
+        updateSong();
+
+
+
+        menu.remove();
+
+
+
+        saveData();
+
+
+
+    };
+
+
+
+
+
+
+
+    menu.children[1].onclick=()=>{
+
+
+
+        let num=
+        row.querySelectorAll(".score")
+        .length;
+
+
+
+        scoreCount-=num;
+
+
+
+        row.querySelector(".scoreArea")
+        .innerHTML="";
+
+
+
+        row.dataset.score=0;
+
+
+
+        row.querySelector(".total")
+        .innerText=0;
+
+
+
+        updateSong();
+
+
+
+        menu.remove();
+
+
+
+        saveData();
+
+
+
+    };
+
+
+
+
+
+
+    document.body.appendChild(menu);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// 积分右键
+// ===============================
+
+
+function showScoreMenu(x,y,span){
+
+
+
+    closeMenu();
+
+
+
+
+    let menu=
+    document.createElement("div");
+
+
+
+    menu.className="menu";
+
+
+
+    menu.style.left=x+"px";
+
+
+
+    menu.style.top=y+"px";
+
+
+
+    menu.innerHTML=
+
+    "<div>🗑 删除</div>";
+
+
+
+
+
+
+
+    menu.children[0].onclick=()=>{
+
+
+        span.remove();
+
+
+
+        scoreCount--;
+
+
+
+        updateSong();
+
+
+
+        menu.remove();
+
+
+
+        saveData();
+
+
+
+    };
+
+
+
+
+    document.body.appendChild(menu);
+
+
+
+}
+
+
+
+
+
+
+function closeMenu(){
+
+
+
+    let old=
+    document.querySelector(".menu");
+
+
+
+    if(old)
+        old.remove();
+
+
+}
+
+
+
+
+document.onclick=()=>{
+
+
+    closeMenu();
+
+
+};
+// ===============================
+// 创建分区
+// ===============================
+
+
+function createZone(canDelete=false){
+
+
+    let zone=document.createElement("div");
+
+
+    zone.className="zone";
+
+
+
+    zone.innerHTML=`
+
+    <div class="toolbar">
+
+
+        <button class="addRoleBtn">
+        👤 添加角色
+        </button>
+
+
+
+        <button class="clearBtn">
+        🧹 清空角色
+        </button>
+
+
+
+        <button class="sortBtn">
+        🏆 按积分排序
+        </button>
+
+
+
+
+        ${
+        canDelete
+        ?
+        `
+        <button class="deleteZone">
+        ❌ 删除分区
+        </button>
+        `
+        :
+        ""
+        }
+
+
+
+        <div class="right">
+
+
+            <button class="fontBig">
+            🔍 字体变大
+            </button>
+
+
+
+            <button class="fontSmall">
+            🔎 字体变小
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="roles"></div>
+
+
+    `;
+
+
+
+
+
+    document
+    .getElementById("app")
+    .appendChild(zone);
+
+
+
+
+
+    let roles=
+    zone.querySelector(".roles");
+
+
+
+
+
+
+    // 添加角色
+
+
+    zone.querySelector(".addRoleBtn")
+    .onclick=()=>{
+
+
+        createRole(roles);
+
+
+        saveData();
+
+
+    };
+
+
+
+
+
+
+    // 清空
+
+
+    zone.querySelector(".clearBtn")
+    .onclick=()=>{
+
+
+        let count=
+        zone.querySelectorAll(".score")
+        .length;
+
+
+
+        scoreCount-=count;
+
+
+
+        roles.innerHTML="";
+
+
+
+        updateSong();
+
+
+
+        saveData();
+
+
+
+    };
+
+
+
+
+
+
+    // 排序
+
+
+    zone.querySelector(".sortBtn")
+    .onclick=()=>{
+
+
+        sortRoles(roles);
+
+
+    };
+
+
+
+
+
+
+
+
+    // 删除分区
+
+
+    let del=
+    zone.querySelector(".deleteZone");
+
+
+
+    if(del){
+
+
+        del.onclick=()=>{
+
+
+            let count=
+            zone.querySelectorAll(".score")
+            .length;
+
+
+
+            scoreCount-=count;
+
+
+
+            zone.remove();
+
+
+
+            updateSong();
+
+
+
+            saveData();
+
+
+
+        };
+
+
+    }
+
+
+
+
+
+
+
+    // 字体
+
+
+    zone.querySelector(".fontBig")
+    .onclick=()=>changeFont(1);
+
+
+
+    zone.querySelector(".fontSmall")
+    .onclick=()=>changeFont(-1);
+
+
+
+
+
+    return zone;
+
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// 排序动画
+// ===============================
+
+
+function sortRoles(box){
+
+
+
+    let arr=
+    [...box.children];
+
+
+
+    arr.sort((a,b)=>{
+
+
+        return Number(b.dataset.score)
+        -
+        Number(a.dataset.score);
+
+
+    });
+
+
+
+
+
+    arr.forEach(e=>{
+
+
+        e.classList.add(
+        "sortAnimation"
+        );
+
+
+
+        box.appendChild(e);
+
+
+
+        setTimeout(()=>{
+
+
+            e.classList.remove(
+            "sortAnimation"
+            );
+
+
+        },500);
+
+
+
+    });
+
+
+
+    saveData();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// 拖动交换
+// ===============================
+
+
+function enableDrag(row){
+
+
+
+    row.ondragover=e=>{
+
+
+        e.preventDefault();
+
+
+    };
+
+
+
+
+
+    row.ondrop=e=>{
+
+
+        e.preventDefault();
+
+
+
+        let target=e.currentTarget;
+
+
+
+        if(target!==row){
+
+
+
+            let parent=row.parentNode;
+
+
+
+            let list=
+            [...parent.children];
+
+
+
+            if(
+            list.indexOf(row)
+            <
+            list.indexOf(target)
+            ){
+
+
+                parent.insertBefore(
+                    row,
+                    target.nextSibling
+                );
+
+
+            }
+            else{
+
+
+                parent.insertBefore(
+                    row,
+                    target
+                );
+
+
+            }
+
+
+
+
+            saveData();
+
+
+
+        }
+
+
+
+    };
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// 保存
+// ===============================
+
+
+function saveData(){
+
+
+
+    let data=[];
+
+
+
+    document
+    .querySelectorAll(".zone")
+    .forEach(zone=>{
+
+
+
+        let zoneData=[];
+
+
+
+        zone
+        .querySelectorAll(".role")
+        .forEach(row=>{
+
+
+
+            let scores=[];
+
+
+
+            row
+            .querySelectorAll(".score")
+            .forEach(s=>{
+
+
+                scores.push({
+
+                    text:s.innerText,
+
+                    type:
+                    s.classList.contains("plus")
+                    ?
+                    "plus"
+                    :
+                    "minus"
+
+
+                });
+
+
+
+            });
+
+
+
+
+
+            zoneData.push({
+
+                name:
+                row.querySelector(".name")
+                .innerText,
+
+                score:
+                row.dataset.score,
+
+                scores:scores
+
+
+            });
+
+
+
+        });
+
+
+
+
+
+        data.push(zoneData);
+
+
+
+    });
+
+
+
+
+
+    localStorage.setItem(
+
+        "guessSongData",
+
+        JSON.stringify(data)
+
+    );
+
+
+
+    localStorage.setItem(
+
+        "guessFont",
+
+        currentFontSize
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// 恢复
+// ===============================
+
+
+function loadData(){
+
+
+
+    let data=
+    localStorage.getItem(
+    "guessSongData"
+    );
+
+
+
+    let font=
+    localStorage.getItem(
+    "guessFont"
+    );
+
+
+
+    if(font){
+
+        currentFontSize=
+        Number(font);
+
+    }
+
+
+
+
+
+
+
+    if(!data){
+
+
+        createZone(false);
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+    let zones=
+    JSON.parse(data);
+
+
+
+    scoreCount=0;
+
+
+
+
+
+    zones.forEach((zoneData,index)=>{
+
+
+
+        let zone=
+        createZone(index!==0);
+
+
+
+        let box=
+        zone.querySelector(".roles");
+
+
+
+
+
+        zoneData.forEach(player=>{
+
+
+
+            let row=
+            createRole(box);
+
+
+
+            row.querySelector(".name")
+            .innerText=
+            player.name;
+
+
+
+            row.dataset.score=
+            player.score;
+
+
+
+            row.querySelector(".total")
+            .innerText=
+            player.score;
+
+
+
+
+
+
+
+            player.scores
+            .forEach(s=>{
+
+
+
+                let span=
+                document.createElement("span");
+
+
+
+                span.className=
+                "score "+
+                s.type;
+
+
+
+                span.innerText=
+                s.text;
+
+
+
+                span.style.fontSize=
+                currentFontSize+"px";
+
+
+
+
+
+                span.oncontextmenu=e=>{
+
+
+                    e.preventDefault();
+
+
+
+                    showScoreMenu(
+
+                        e.pageX,
+
+                        e.pageY,
+
+                        span
+
+                    );
+
+
+                };
+
+
+
+
+
+                row.querySelector(".scoreArea")
+                .appendChild(span);
+
+
+
+                scoreCount++;
+
+
+
+            });
+
+
+
+
+        });
+
+
+
+
+    });
+
+
+
+
+
+    updateSong();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// 添加分区按钮
+// ===============================
+
+
+document
+.getElementById("addZoneBtn")
+.onclick=()=>{
+
+
+    createZone(true);
+
+
+    saveData();
+
+
+};
+
+
+
+
+
+
+
+// ===============================
+// 启动
+// ===============================
+
+
+window.onload=()=>{
+
+
+    loadData();
+
+
+};
 
 </script>
 
+
 </body>
+
 </html>
